@@ -7,5 +7,6 @@
 </head>
 <body>
     <p><a href="inscription.php">page d'incription</a></p>
+    <p><a href="Administration.php">la page d'administraction</a></p>
 </body>
 </html>

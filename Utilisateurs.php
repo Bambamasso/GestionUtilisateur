@@ -29,7 +29,7 @@ public function setId($id){
   }
 }
 public function setNom($nom){
-    if(!is_string($nom)|| empty($nom)){
+    if(!is_string($nom) || empty($nom)){
         $this->erreur[]=self::NOM_INVALIDE;
       } else{
         $this->nom=$nom;
