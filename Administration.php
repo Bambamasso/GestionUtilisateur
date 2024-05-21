@@ -2,7 +2,7 @@
 require('Utilisateurs.php');
 require('UtilisateursManager.php');
 
-$dbPDO=new pdo("mysql:host=localhost;dbname=gestion_utilisateurs",'root','');
+$dbPDO=new PDO("mysql:host=localhost;dbname=gestion_utilisateurs",'root','');
 $dbPDO->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 
 $manager=new UtilisateursManager($dbPDO);
@@ -15,14 +15,14 @@ if(isset($_POST['nom'])){
    $utilisateur = new Utilisateurs(
       [
       'nom'=>$_POST['nom'],
-      'nom'=>$_POST['prenom'],
-      'nom'=>$_POST['tel'],
-      'nom'=>$_POST['email'],
+      'prenom'=>$_POST['prenom'],
+      'tel'=>$_POST['tel'],
+      'email'=>$_POST['email'],
    ]
       );
 
-      if(isset($_POST['id'])){
-         $utilisateur->setId($_POST['id']);
+      if(isset($_GET['modifier'])){
+         $utilisateur->setId($_GET['modifier']);
       }
 
       if($utilisateur->isUserValide()){
@@ -32,6 +32,13 @@ if(isset($_POST['nom'])){
       else{
          $erreurs=$utilisateur->getErreurs();
       }
+}
+
+if(isset($_GET['supprimer'])){
+   $manager->supprimer( (int) $_GET['supprimer']);
+}
+else{
+   
 }
 ?>
 
@@ -61,7 +68,7 @@ if(isset($_POST['nom'])){
 
      <p><h1>modification </h1></p>
        <form action="" method="post">
-    <table>
+    <table> 
 
         <?php if (isset( $erreurs) && in_array(Utilisateurs::NOM_INVALIDE,$erreurs)) echo 'Le nom est invalide </br>'; ?>
         <tr> <td>Nom:</td><td><input type="text" name="nom"  value="<?php if(isset($utilisateur)){echo $utilisateur->getNom();} ?>"></td></tr>
@@ -79,7 +86,7 @@ if(isset($_POST['nom'])){
         <?php 
        }
        ?>
-      <tr> <td><input type="submit" value="modifier" name="modifier"></td></tr>
+      <tr><td><input type="submit" value="modifier" name="modifier"></td></tr>
        
     </table>
     
@@ -103,6 +110,7 @@ if(isset($_POST['nom'])){
             <td><?php echo $values->getTel()?></td>
             <td><?php echo $values->getEmail()?></td>
             <td><a href="?modifier=<?php echo $values->getId();?>">Modifier</a></td>
+            <td><a href="?supprimer=<?php echo $values->getId();?>">Suprimer</a></td>
         </tr>
        
         <?php endforeach;?>

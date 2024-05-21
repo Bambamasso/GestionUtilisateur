@@ -30,14 +30,14 @@ public function setId($id){
 }
 public function setNom($nom){
     if(!is_string($nom) || empty($nom)){
-        $this->erreur[]=self::NOM_INVALIDE;
+        $this->erreurS[]=self::NOM_INVALIDE;
       } else{
         $this->nom=$nom;
       }
 }
 public function setPrenom($prenom){
     if(!is_string($prenom)|| empty($prenom)){
-        $this->erreur[]=self::PRENOM_INVALIDE;
+        $this->erreurS[]=self::PRENOM_INVALIDE;
       } else{
         $this->prenom=$prenom;
       }
